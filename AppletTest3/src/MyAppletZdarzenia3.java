@@ -17,6 +17,15 @@ public class MyAppletZdarzenia3 extends Applet implements ItemListener, ActionLi
 
 	public void init() {
 		
+		wybor = new TextField(20);
+		add(wybor);
+		choice1 = new Choice();
+		choice1.add("Black");
+		choice1.add("Red");
+		choice1.add("Blue");
+		add(choice1);
+		choice1.addItemListener(this);
+		
 		c1 = new Checkbox("1");
 		add(c1);
 		c1.addItemListener(this);
@@ -40,17 +49,14 @@ public class MyAppletZdarzenia3 extends Applet implements ItemListener, ActionLi
 		przycisk3 = new Button("WLACZ C");	
 		add(przycisk3);						
 		przycisk3.addActionListener(this);
-		
-		wybor = new TextField(15);
-		add(wybor);
-		//todo-choice koloru
 
 	}	// koniec funkcji init
 
 	boolean bokA = false, bokB = false, bokC = false;
-
+	String color = "Red";
 	public void paint(Graphics g) {
 		setSize(500,500);
+		color = (String)(wybor.getText());
 		if (bokA == true) {
 			g.setColor(this.getForeground()); 
 			g.drawLine(50,50, 80, 190);
@@ -98,6 +104,9 @@ public class MyAppletZdarzenia3 extends Applet implements ItemListener, ActionLi
 		if (evt.getItemSelectable() == c3) {
 			bokC = !bokC;
 		}
+		if(evt.getItemSelectable() == choice1){
+			wybor.setText(((Choice)evt.getItemSelectable()).getSelectedItem());
+		}
 
 		repaint(); 	// WAZNE, zeby funkcja paint wywolywala sie ponownie 
 	}
@@ -107,7 +116,7 @@ public class MyAppletZdarzenia3 extends Applet implements ItemListener, ActionLi
 		
 		if (evt.getSource() == przycisk1) {
 			bokA = !bokA; 
-			c1.setState(!c1.getState());
+			c1.setState(!c1.getState()); //tutaj funkcja actionperformed dodatkowo oprocz odwrocenia boolean odwraca status checkboxa - odpal program to wszystko sie wyjasni :D 
 		}
 		
 		if (evt.getSource() == przycisk2){
@@ -123,4 +132,4 @@ public class MyAppletZdarzenia3 extends Applet implements ItemListener, ActionLi
 		repaint(); 	// WAZNE, zeby funkcja paint wywolywala sie ponownie 
 	}
 
-}		// koniec klasy Appletu
+}// koniec klasy Appletu
